@@ -1,0 +1,32 @@
+package config
+
+import (
+	"fmt"
+
+	"github.com/spf13/viper"
+)
+
+type Config struct {
+	Port         string `mapstructure:"PORT"`
+	DBUrl        string `mapstructure:"DB_URL"`
+	JWTSecretKey string `mapstructure:"JWT_SECRET_KEY"`
+}
+
+func LoadConfig() (config Config, err error) {
+	viper.AddConfigPath("./pkg/config/envs")
+	viper.SetConfigName("dev")
+	viper.SetConfigType("env")
+
+	viper.AutomaticEnv()
+
+	err = viper.ReadInConfig()
+
+	if err != nil {
+		fmt.Println("Error Read in Config:", err)
+		return
+	}
+
+	err = viper.Unmarshal(&config)
+
+	return
+}
