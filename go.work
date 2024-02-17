@@ -3,5 +3,6 @@ go 1.21.7
 use (
 	./api-gateway
 	./auth-svc
+	./order-svc
 	./product-svc
 )
